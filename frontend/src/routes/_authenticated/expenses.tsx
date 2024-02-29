@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 
-export const Route = createFileRoute("/expenses")({
+export const Route = createFileRoute("/_authenticated/expenses")({
   component: AllExpenses,
 });
 

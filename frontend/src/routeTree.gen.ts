@@ -4,21 +4,16 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProfileImport } from './routes/profile'
-import { Route as ExpensesImport } from './routes/expenses'
 import { Route as AboutImport } from './routes/about'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthenticatedExpensesImport } from './routes/_authenticated/expenses'
 import { Route as AuthenticatedCreateImport } from './routes/_authenticated/create'
 
 // Create/Update Routes
 
 const ProfileRoute = ProfileImport.update({
   path: '/profile',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ExpensesRoute = ExpensesImport.update({
-  path: '/expenses',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -35,6 +30,11 @@ const AuthenticatedRoute = AuthenticatedImport.update({
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedExpensesRoute = AuthenticatedExpensesImport.update({
+  path: '/expenses',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedCreateRoute = AuthenticatedCreateImport.update({
@@ -58,16 +58,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/expenses': {
-      preLoaderRoute: typeof ExpensesImport
-      parentRoute: typeof rootRoute
-    }
     '/profile': {
       preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
     '/_authenticated/create': {
       preLoaderRoute: typeof AuthenticatedCreateImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/expenses': {
+      preLoaderRoute: typeof AuthenticatedExpensesImport
       parentRoute: typeof AuthenticatedImport
     }
   }
@@ -77,8 +77,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
-  AuthenticatedRoute.addChildren([AuthenticatedCreateRoute]),
+  AuthenticatedRoute.addChildren([
+    AuthenticatedCreateRoute,
+    AuthenticatedExpensesRoute,
+  ]),
   AboutRoute,
-  ExpensesRoute,
   ProfileRoute,
 ])
