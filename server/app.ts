@@ -1,5 +1,9 @@
 import { Hono } from "hono";
-import { logger } from 'hono/logger'
+import { logger } from 'hono/logger';
+import { fakeExpenses } from "./fakedb";
+import { serveStatic } from 'hono/bun'
+
+
 
 const app = new Hono();
 
@@ -11,20 +15,7 @@ type Expense = {
   amount: number,
   date: string
 }
-const fakeExpenses: Expense[] = [
-  {
-    id: 1,
-    title: "Food",
-    amount: 10,
-    date: "2021-01-01"
-  },
-  {
-    id: 2,
-    title: "Transport",
-    amount: 5,
-    date: "2021-01-02"
-  }
-]
+
 
 export const expensesRoute = new Hono()
   .get("/", async (c) => {
@@ -61,5 +52,10 @@ export const expensesRoute = new Hono()
   });
 
 app.route("/api/expenses", expensesRoute)
+
+app.get("*", serveStatic({ root: "./frontend/dist" }));
+app.get("*", serveStatic({ path: './frontend/dist/index.html' }))
+
+
 
 export default app;

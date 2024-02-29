@@ -2,6 +2,12 @@
   "name": "expensetracker",
   "module": "index.ts",
   "type": "module",
+  "version": "1.0.0",
+  "description": "Expense Tracker",
+  "scripts": {
+    "dev": "bun --watch server/index.ts",
+    "start": "bun server/index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

@@ -1,38 +1,33 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+type ExpenseTotal = {
+  total: number;
+};
+
+async function getTotalExpenses() {
+  const res = await fetch("/api/expenses/total-amount");
+  const json: ExpenseTotal = await res.json();
+  return json;
+}
 
 function App() {
-  const [totalSpent, setTotaSpent] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    async function getTotalExpenses() {
-      setIsLoading(true);
-      setError("");
-      try {
-        const res = await fetch("/api/expenses/total-amount");
-        const json = await res.json();
-        setTotaSpent(json.total);
-      } catch (error) {
-        setError("There was an error. try again");
-      }
-      setIsLoading(false);
-    }
-    getTotalExpenses();
-  }, []);
+  const query = useQuery({
+    queryKey: ["total-amount"],
+    queryFn: getTotalExpenses,
+  });
 
   return (
     <div className="w-screen h-screen bg-white dark:bg-black text-black dark:text-white">
       <h1 className="text-center">Expenses</h1>
-      {error ? (
-        <div>{error}</div>
-      ) : isLoading ? (
+      {query.error ? (
+        <div>{query.error.message}</div>
+      ) : query.isPending ? (
         <div className="flex flex-col max-w-96 m-auto animate-pulse">
           Total Spent ...
         </div>
       ) : (
         <div className="flex flex-col max-w-96 m-auto">
-          Total Spent {totalSpent}
+          Total Spent {query.data.total}
         </div>
       )}
     </div>
