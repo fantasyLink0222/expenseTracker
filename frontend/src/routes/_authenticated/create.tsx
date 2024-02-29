@@ -3,7 +3,7 @@ import { createFileRoute,useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
 
-export const Route = createFileRoute("/create")({
+export const Route = createFileRoute("/_authenticated/create")({
   component: CreateExpense,
 });
 

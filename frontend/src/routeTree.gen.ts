@@ -5,9 +5,10 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProfileImport } from './routes/profile'
 import { Route as ExpensesImport } from './routes/expenses'
-import { Route as CreateImport } from './routes/create'
 import { Route as AboutImport } from './routes/about'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthenticatedCreateImport } from './routes/_authenticated/create'
 
 // Create/Update Routes
 
@@ -21,19 +22,24 @@ const ExpensesRoute = ExpensesImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const CreateRoute = CreateImport.update({
-  path: '/create',
+const AboutRoute = AboutImport.update({
+  path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AboutRoute = AboutImport.update({
-  path: '/about',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedCreateRoute = AuthenticatedCreateImport.update({
+  path: '/create',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -44,12 +50,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      preLoaderRoute: typeof AboutImport
+    '/_authenticated': {
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/create': {
-      preLoaderRoute: typeof CreateImport
+    '/about': {
+      preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
     '/expenses': {
@@ -60,6 +66,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/create': {
+      preLoaderRoute: typeof AuthenticatedCreateImport
+      parentRoute: typeof AuthenticatedImport
+    }
   }
 }
 
@@ -67,8 +77,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
+  AuthenticatedRoute.addChildren([AuthenticatedCreateRoute]),
   AboutRoute,
-  CreateRoute,
   ExpensesRoute,
   ProfileRoute,
 ])
