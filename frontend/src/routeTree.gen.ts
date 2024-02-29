@@ -3,10 +3,22 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ExpensesImport } from './routes/expenses'
+import { Route as CreateImport } from './routes/create'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const ExpensesRoute = ExpensesImport.update({
+  path: '/expenses',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreateRoute = CreateImport.update({
+  path: '/create',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   path: '/about',
@@ -30,9 +42,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/create': {
+      preLoaderRoute: typeof CreateImport
+      parentRoute: typeof rootRoute
+    }
+    '/expenses': {
+      preLoaderRoute: typeof ExpensesImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexRoute, AboutRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexRoute,
+  AboutRoute,
+  CreateRoute,
+  ExpensesRoute,
+])
