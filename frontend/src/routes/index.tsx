@@ -31,17 +31,7 @@ async function getAllExpenses() {
     return json;
   }
 
-async function createExpense(expense: Expense) {
-  const res = await fetch("/api/expenses", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(expense),
-  });
-  const json: Expense = await res.json();
-  return json;
-}
+
 
 function HomePage() {
   const totalAmountQuery = useQuery({
