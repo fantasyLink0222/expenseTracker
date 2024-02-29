@@ -3,12 +3,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ProfileImport } from './routes/profile'
 import { Route as ExpensesImport } from './routes/expenses'
 import { Route as CreateImport } from './routes/create'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const ProfileRoute = ProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ExpensesRoute = ExpensesImport.update({
   path: '/expenses',
@@ -50,6 +56,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExpensesImport
       parentRoute: typeof rootRoute
     }
+    '/profile': {
+      preLoaderRoute: typeof ProfileImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -60,4 +70,5 @@ export const routeTree = rootRoute.addChildren([
   AboutRoute,
   CreateRoute,
   ExpensesRoute,
+  ProfileRoute,
 ])

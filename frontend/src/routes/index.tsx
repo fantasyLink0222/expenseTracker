@@ -1,15 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 
-
-export const Route = createFileRoute('/')({
-    component: HomePage,
-  })
+export const Route = createFileRoute("/")({
+  component: HomePage,
+});
 type ExpenseTotal = {
   total: number;
 };
-
-
 
 export async function getTotalExpenses() {
   const res = await fetch("/api/expenses/total-amount");
@@ -17,18 +14,11 @@ export async function getTotalExpenses() {
   return json;
 }
 
-
-
-
 function HomePage() {
   const totalAmountQuery = useQuery({
     queryKey: ["total-amount"],
     queryFn: getTotalExpenses,
   });
-
- 
-
-  
 
   return (
     <div className="w-screen h-screen bg-white dark:bg-black text-black dark:text-white">
@@ -44,18 +34,6 @@ function HomePage() {
           Total Spent {totalAmountQuery.data.total}
         </div>
       )}
-
-     
-    
-   
-
-    
-
-
-
     </div>
   );
 }
-
-
-
