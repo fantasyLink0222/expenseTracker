@@ -1,8 +1,6 @@
 import { Hono } from "hono";
 import { logger } from 'hono/logger';
-import { fakeExpenses } from "./fakedb";
 import { serveStatic } from 'hono/bun'
-
 import { expenses as expensesTable } from "./db/schema/expenses";
 import { db } from "./db";
 import { desc, eq, sum } from "drizzle-orm"
