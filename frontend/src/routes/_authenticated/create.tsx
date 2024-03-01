@@ -33,7 +33,7 @@ function CreateExpense() {
   return (
     <div className="w-screen h-screen bg-white dark:bg-black text-black dark:text-white">
       <div className="flex flex-col max-w-96 m-auto">
-        <h2 className="text-xl pt-6"> create a new expense </h2>
+        <h2 className="text-xl pt-6 text-center"> create a new expense </h2>
         <form
           className="flex flex-col max-w-96 m-auto"
           onSubmit={submitExpense}

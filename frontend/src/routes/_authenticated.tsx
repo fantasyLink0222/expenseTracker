@@ -25,7 +25,7 @@ function Authenticated() {
 
 function Login() {
   return (
-    <div>
+    <div className="flex flex-col max-w-96 m-auto text-center">
       <h1> You must Login</h1>
       <a href="/api/login">Login</a>
     </div>

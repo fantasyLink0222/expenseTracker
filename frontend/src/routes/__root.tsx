@@ -10,8 +10,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function Root() {
   const currentUserQuery = useQuery(currentUserQueryOptions);
   return (
-    <div className="w-screen h-screen bg-white dark:bg-black text-black dark:text-white overflow-auto">
-      <div className="p-2 flex gap-2">
+    <div className="w-screen h-screen bg-white dark:bg-black text-black dark:text-white overflow-hidden">
+      <div className="p-2 flex gap-2 justify-center">
         <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>{" "}

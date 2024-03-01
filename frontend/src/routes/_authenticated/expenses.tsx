@@ -37,7 +37,7 @@ function AllExpenses() {
         </div>
       ) : (
         <div className="flex flex-col max-w-96 m-auto">
-          <h2 className="text-xl pt-6"> all expenses</h2>
+          <h2 className="text-xl pt-6 text-center"> all expenses</h2>
           {allExpensesQuery.data?.expenses?.map((expense) => (
             <div key={expense.id} className="flex justify-between">
               <div>{expense.title}</div>
